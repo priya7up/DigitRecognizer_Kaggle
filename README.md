@@ -14,8 +14,10 @@ First an explanation of the various files needed for this project.
 7. digit_recognizer.csv - final results of the analysis in the format required for submission to Kaggle
 
 I have created three python files with small amounts of code in each to modularize the codebase. 
+
 There are two ways of processing the data that I have explored for this project.
 a. Using the random forest classifier on the raw images resulted in 96% accuracy in identifying the handwritten digits but I wanted to do better. Cropping the images improved the results some . There was a good lesson to learn here - the edges did not contain that much information and was probably acting as noise and confusing the algorithm. So the algorithm worked better when we remove this ‘noise’. I use this concept in future projects as well (for example, the SF crime project). In order to use cropped data, set the variable cropped = True
+
 b. Although 42000 images is not a small amount, a larger training dataset would certainly improve results. There are many ways in which we can increase the training data size in this project. We can shift the image of the digits to the left, right, up and down. We can rotate the image or we can add random noise to randomly chosen pixels. I implemented the image shifting in the data_processing.py file. The images are simply shifted by one column to the left and to the right by shifting the pixel values respectively while looping over the last pixel value. 
 Combining the image shifting process with the cropping feature improved the final result by 1%.
 
