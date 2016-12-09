@@ -2,12 +2,12 @@ import pandas as pd
 import logging
 
 def main():
-    logging.basicConfig(filename='digit_recognizer.log', level=logging.INFO)
+    logging.basicConfig(format='%(levelname)s:%(message)s', level=logging.INFO)
     logging.info('Reading in training data \n')
     training_data = pd.read_csv('train.csv')
 
     # Helper function to shift image by one column to the left or to the right
-    def imageshifterbyonecolumn(data, to_pixel, from_pixel):
+    def create_shifted_image(data, to_pixel, from_pixel):
         logging.info('Shifting image by one column from {} to {} followed by subsequent columns'.format(from_pixel, to_pixel))
         """ Creating a new dataframe that will contain data of the shifted image, 
             the number of pixels in the shifted image is the same as the original image """
@@ -20,7 +20,7 @@ def main():
 
 
     # Function to create one concatenated dataframe containing the raw data and new data from the shifted images
-    def shift_image():
+    def concatenate_data():
         """ Shifting images by one column to the left """
         left_shifted_training_data = imageshifterbyonecolumn(training_data, 'pixel783', 'pixel0') 
         """ Shifting images by one column to the right """
