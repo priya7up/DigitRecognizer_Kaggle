@@ -25,7 +25,7 @@ def main():
     training_data = pd.read_csv('train.csv')
     
     filename = 'processed_train.csv'
-    logging.info('Writing processed training data into {}'.format(filename))
+    logging.info('Writing processed training data into %s', filename)
     final_training_data = concatenate_data(training_data)
     final_training_data.to_csv(filename, index=False)
 
