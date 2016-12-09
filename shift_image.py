@@ -9,18 +9,22 @@ def main():
     # Helper function to shift image by one column to the left or to the right
     def imageshifterbyonecolumn(data, to_pixel, from_pixel):
         logging.info('Shifting image by one column from {} to {} followed by subsequent columns'.format(from_pixel, to_pixel))
-        shifted_data = pd.DataFrame(columns=data.columns.values) #new dataframe that will contain data of the shifted image
+        """ Creating a new dataframe that will contain data of the shifted image, 
+            the number of pixels in the shifted image is the same as the original image """
+        shifted_data = pd.DataFrame(columns=data.columns.values)
         shifted_data['label'] = data['label'] 
         shifted_data[shifted_data.columns.difference(['label', to_pixel])] = \
-            data[data.columns.difference(['label', from_pixel])] #shifting the pixel values by one column
-        shifted_data.loc[:, to_pixel] = data.loc[:, from_pixel] #wrapping around the 'from_pixel' values into the 'to_pixel' column
+            data[data.columns.difference(['label', from_pixel])] 
+        shifted_data.loc[:, to_pixel] = data.loc[:, from_pixel] 
         return shifted_data
 
 
     # Function to create one concatenated dataframe containing the raw data and new data from the shifted images
     def shift_image():
-        left_shifted_training_data = imageshifterbyonecolumn(training_data, 'pixel783', 'pixel0') #shifting images by one column to the left
-        right_shifted_training_data = imageshifterbyonecolumn(training_data, 'pixel0', 'pixel783') #shifting images by one column to the right
+        """ Shifting images by one column to the left """
+        left_shifted_training_data = imageshifterbyonecolumn(training_data, 'pixel783', 'pixel0') 
+        """ Shifting images by one column to the right """
+        right_shifted_training_data = imageshifterbyonecolumn(training_data, 'pixel0', 'pixel783') 
         return pd.concat([training_data, left_shifted_training_data, right_shifted_training_data]) 
 
 
