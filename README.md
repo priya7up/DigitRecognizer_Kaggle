@@ -10,9 +10,9 @@ First an explanation of the various files needed for this project.
 
 2. test.csv - test data provided by Kaggle to use for submission. This file is not uploaded in this repository due to its size but is needed to be able to run the python scripts. Please download it from here: https://www.kaggle.com/c/digit-recognizer/data).
 
-3. data_processing.py - Python program that processes the raw images to create more training data. Kaggle provided us with 42,000 images of various digits ranging from 0 to 9 each with 28 X 28 pixels. In order to increase the training data, this program shifts the images by one column to the left, thus creating 42,000 ‘new’ images and one column to the right, creating another 42,000 ‘new’ images and saves these 126,000 images in a new file called processed_data.csv 
+3. shift_image.py - Python program that processes the raw images to create more training data. Kaggle provided us with 42,000 images of various digits ranging from 0 to 9 each with 28 X 28 pixels. In order to increase the training data, this program shifts the images by one column to the left, thus creating 42,000 ‘new’ images and one column to the right, creating another 42,000 ‘new’ images and saves these 126,000 images in a new file called processed_data.csv 
 
-4. processed_data.csv - see #3 above. This is a >200 MB file and GitHub does not allow uploading such large files so I have not made it available in the project directory. 
+4. processed_train.csv - see #3 above. This is a >200 MB file and GitHub does not allow uploading such large files so I have not made it available in the project directory. 
 
 5. image_cropped.py - crops the image before fitting a machine learning model to the data.
 
