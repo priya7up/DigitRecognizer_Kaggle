@@ -17,10 +17,11 @@ def create_shifted_image(data, to_pixel, from_pixel):
 
 def concatenate_data(data):
     """ Function to create one concatenated dataframe containing the raw data and new data from the shifted images """
+    last_pixel = 'pixel' + str(data.shape[1] - 2)
     #Shifting images by one column to the left    
-    left_shifted_training_data = create_shifted_image(data, 'pixel783', 'pixel0') 
+    left_shifted_training_data = create_shifted_image(data, last_pixel, 'pixel0') 
     #Shifting images by one column to the right    
-    right_shifted_training_data = create_shifted_image(data, 'pixel0', 'pixel783') 
+    right_shifted_training_data = create_shifted_image(data, 'pixel0', last_pixel) 
     return pd.concat([data, left_shifted_training_data, right_shifted_training_data]) 
 
 
