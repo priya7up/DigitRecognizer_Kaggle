@@ -4,6 +4,7 @@ from sklearn import cross_validation
 from sklearn.ensemble import RandomForestClassifier
 from collections import Counter
 from cropping import crop
+from shift_image import concatenate_data
 
 # DEFINE CONSTANTS
 FRACTION_OF_TEST_DATA = 0.0
@@ -17,18 +18,25 @@ except IndexError:
 
 # READ IN DATA FROM CSV
 print 'Reading in training and test data \n'
+
+
+test_data = pd.read_csv('test.csv')
+
 try:
     filename = sys.argv[1]
+except:
+    filename = 'processed_train.csv'
+    
+try:    
     training_data = pd.read_csv(filename)
-except IndexError:
-    training_data = pd.read_csv('processed_train.csv')
 except IOError: 
-    training_data = pd.read_csv('train.csv')
-test_data = pd.read_csv('test.csv')
+    raw_train_data = pd.read_csv('train.csv')
+    training_data = concatenate_data(raw_train_data)
 
 if cropped:
     training_data = crop(training_data, ROWS, COLUMNS)
     test_data = crop(test_data, ROWS, COLUMNS)
+    
 data_features = training_data[test_data.columns.values]
 data_labels = training_data['label']
 
