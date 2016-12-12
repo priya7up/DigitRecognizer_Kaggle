@@ -65,7 +65,7 @@ print spread
 # CREATING THE CSV FILE WITH THE OUTPUT DATA IN THE FORMAT SPECIFIED FOR SUBMISSION TO KAGGLE
 filename = 'digit_recognizer.csv'
 print 'Writing output data for submission to Kaggle to {}'.format(filename)
-idx = range(1,28001)
+idx = range(1, test_data.shape[0] + 1)
 final_result = pd.DataFrame(data= output, index=idx, columns=['Label'])
 final_result.index.name = 'ImageId'
 final_result.to_csv(filename)
