@@ -1,33 +1,48 @@
+import sys
 import pandas as pd
 from sklearn import cross_validation
 from sklearn.ensemble import RandomForestClassifier
 from collections import Counter
-from image_cropped import crop_or_not
+from cropping import crop
 
 # DEFINE CONSTANTS
 FRACTION_OF_TEST_DATA = 0.0
 ROWS = 28
 COLUMNS = 28
-cropped = True
+
+try:
+    cropped = sys.argv[2]
+except IndexError:
+    cropped = True
 
 # READ IN DATA FROM CSV
 print 'Reading in training and test data \n'
-training_data = pd.read_csv('processed_train.csv')
+try:
+    filename = sys.argv[1]
+    training_data = pd.read_csv(filename)
+except IndexError:
+    training_data = pd.read_csv('processed_train.csv')
+except IOError: 
+    training_data = pd.read_csv('train.csv')
 test_data = pd.read_csv('test.csv')
 
+if cropped:
+    training_data = crop(training_data, ROWS, COLUMNS)
+    test_data = crop(test_data, ROWS, COLUMNS)
+data_features = training_data[test_data.columns.values]
+data_labels = training_data['label']
 
 # SPLIT DATA INTO TRAIN-TEST BASED ON FRACTION DEFINED IN CONSTANTS, IDENTIFY DATA FEATURES AND LABELS
-def test_train_data(training_data, test_data, fraction_of_test_data, rows, columns, cropped):
+def test_train_data(features, labels, fraction_of_test_data, rows, columns):
     print 'Creating train and test datasets'
-    data_features, data_labels, final_test_data = crop_or_not(training_data, test_data, rows, columns, cropped)
-    X_train, X_test, y_train, y_test = cross_validation.train_test_split(data_features, data_labels,
+    X_train, X_test, y_train, y_test = cross_validation.train_test_split(features, labels,
                                                                          test_size=fraction_of_test_data,
                                                                          random_state=0)
-    return X_train, X_test, y_train, y_test, final_test_data
+    return X_train, X_test, y_train, y_test
 
 
 # CALL TEST-TRAIN FUNCTION TO GET TEST AND TRAINING DATA SETS
-X_train, X_test, y_train, y_test, final_test_data = test_train_data(training_data, test_data, FRACTION_OF_TEST_DATA, ROWS, COLUMNS, cropped)
+X_train, X_test, y_train, y_test = test_train_data(data_features, data_labels, FRACTION_OF_TEST_DATA, ROWS, COLUMNS)
 
 # RANDOM FOREST CLASSIFIER
 def random_forest_algo(X_train, y_train, X_test):#, y_test): #when cross-validating the model, uncomment the y_test parameter
@@ -38,7 +53,7 @@ def random_forest_algo(X_train, y_train, X_test):#, y_test): #when cross-validat
     return output, Counter(output) #, rf.score(X_test, y_test) #when cross-validating, uncomment the rf.score to check performance of model
 
 # USING THE RANDOM FOREST CLASSIFIER ON THE TEST DATA
-output, spread = random_forest_algo(X_train, y_train, final_test_data)
+output, spread = random_forest_algo(X_train, y_train, test_data)
 print spread
 
 # UNCOMMENT BELOW TO CROSS-VALIDATE THE MODEL. THIS WILL USE THE TRAINING DATA SPLIT INTO TRAINING AND CROSS-VALIDATING
