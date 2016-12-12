@@ -1,6 +1,6 @@
 import sys
 import pandas as pd
-from sklearn import cross_validation
+from sklearn import model_selection
 from sklearn.ensemble import RandomForestClassifier
 from collections import Counter
 from cropping import crop
@@ -41,16 +41,7 @@ data_features = training_data[test_data.columns.values]
 data_labels = training_data['label']
 
 # SPLIT DATA INTO TRAIN-TEST BASED ON FRACTION DEFINED IN CONSTANTS, IDENTIFY DATA FEATURES AND LABELS
-def test_train_data(features, labels, fraction_of_test_data, rows, columns):
-    print 'Creating train and test datasets'
-    X_train, X_test, y_train, y_test = cross_validation.train_test_split(features, labels,
-                                                                         test_size=fraction_of_test_data,
-                                                                         random_state=0)
-    return X_train, X_test, y_train, y_test
-
-
-# CALL TEST-TRAIN FUNCTION TO GET TEST AND TRAINING DATA SETS
-X_train, X_test, y_train, y_test = test_train_data(data_features, data_labels, FRACTION_OF_TEST_DATA, ROWS, COLUMNS)
+X_train, X_test, y_train, y_test = model_selection.train_test_split(data_features, data_labels, FRACTION_OF_TEST_DATA, random_state=0)
 
 # RANDOM FOREST CLASSIFIER
 def random_forest_algo(X_train, y_train, X_test):#, y_test): #when cross-validating the model, uncomment the y_test parameter
