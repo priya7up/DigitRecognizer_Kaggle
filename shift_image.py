@@ -1,5 +1,6 @@
 import pandas as pd
 import logging
+import sys
 
 def create_shifted_image(data, to_pixel, from_pixel):
         """ Helper function to shift image by one column to the left or to the right """
@@ -27,8 +28,10 @@ def main():
     logging.basicConfig(format='%(levelname)s:%(message)s', level=logging.INFO)
     logging.info('Reading in training data \n')
     training_data = pd.read_csv('train.csv')
-    
-    filename = 'processed_train.csv'
+    try:
+        filename = sys.argv[1]
+    except IndexError:
+        filename = 'processed_train.csv'
     logging.info('Writing processed training data into %s', filename)
     final_training_data = concatenate_data(training_data)
     final_training_data.to_csv(filename, index=False)
