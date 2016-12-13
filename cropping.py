@@ -11,18 +11,3 @@ def crop(data, rows, columns):
     output = sorted(list(remove_pixels))
     pixels_to_crop = ['pixel' + str(x) for x in output]
     return data[data.columns.difference(pixels_to_crop)]
-
-# def crop(training_data, test_data, rows, columns, cropped):
-#     if cropped:
-#         cropped_training_data = training_data[training_data.columns.difference(cropping(rows, columns))]
-#         final_test_data = test_data[test_data.columns.difference(cropping(rows, columns))]
-#         print 'Using cropped data'
-#         data_labels = cropped_training_data['label']
-#         data_features = cropped_training_data[final_test_data.columns.values]
-#     else:
-#         print 'Using non-cropped data'
-#         final_test_data = test_data
-#         data_labels = training_data['label']
-#         data_features = training_data[final_test_data.columns.values]
-#     return data_features, data_labels, final_test_data
-
