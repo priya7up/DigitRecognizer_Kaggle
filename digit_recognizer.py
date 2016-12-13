@@ -18,7 +18,10 @@ def random_forest_algo(X_train, y_train, X_test, y_test=None):
     """ Implements a random forest classifier and returns the predicted labels, distribution of classified labels and a score
     evaluating the performance of the classifier (only if cross_validating) """
     
-    rf = RandomForestClassifier(n_estimators=1000, criterion='gini', max_depth=None, min_samples_split=2, min_samples_leaf=1, min_weight_fraction_leaf=0.0, max_features='auto', max_leaf_nodes=None, bootstrap=True, n_jobs=1, random_state=None, verbose=0, warm_start=False, class_weight=None)
+    rf = RandomForestClassifier(n_estimators=1000, criterion='gini', max_depth=None, min_samples_split=2, 
+                                min_samples_leaf=1, min_weight_fraction_leaf=0.0, max_features='auto', 
+                                max_leaf_nodes=None, bootstrap=True, n_jobs=1, random_state=None, verbose=0, 
+                                warm_start=False, class_weight=None)
     rf.fit(X_train, y_train)
     output = rf.predict(X_test)
     if y_test:
