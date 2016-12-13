@@ -47,7 +47,8 @@ def main():
     data_features = training_data[training_data.columns.difference(['label'])]
     data_labels = training_data['label']
         
-    X_train, X_test, y_train, y_test = model_selection.train_test_split(data_features, data_labels, fraction_of_data_for_cross_val, random_state=0)
+    X_train, X_test, y_train, y_test = model_selection.train_test_split(data_features, data_labels, 
+                                                                        fraction_of_data_for_cross_val, random_state=0)
 
     if args.cross_validating:
         output, spread, score = random_forest_algo(X_train, y_train, X_test, y_test)
