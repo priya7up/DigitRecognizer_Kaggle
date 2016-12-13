@@ -1,4 +1,3 @@
-import sys
 import math
 import pandas as pd
 from sklearn import model_selection
